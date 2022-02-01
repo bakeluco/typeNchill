@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-const PRIDE_AND_PREJUDICE = ["Chapter 1", "Chapter 2"];
+const PRIDE_AND_PREJUDICE = ["Chapter 1", "Chapter 2", "Chapter 3"];
 
 const CUSTOM_TEXTS = ["Text 1", "Text 2"];
 
 const Collections = () => {
-  const collectionsClasses = "w-80 m-0 ml-16 bg-gray-800 shadow-lg h-screen";
+  const collectionsClasses =
+    // "fixed top-0 left-0 right-80 w-80 m-0 ml-16 bg-gray-800 shadow-lg h-screen";
+    "fixed top-0 left-0 m-0 w-80 ml-16 bg-gray-800 shadow-lg h-screen";
   const collectionsContainer =
     "flex flex-col items-center justify-start p-1 m-0";
 
@@ -40,6 +42,7 @@ const Dropdown = ({ bookTitle, chapters }) => {
   const [expanded, setExpanded] = useState(true);
   const dropdownContainerClasses =
     "m-0 w-full px-2 pb-2 transition duration-300 ease-in-out";
+  //   const dropdownHeader = "flex flex-col mx-0 text-gray-500 cursor-pointer ";
   const dropdownHeader = "flex flex-row mx-0 text-gray-500 cursor-pointer ";
 
   return (
@@ -47,10 +50,11 @@ const Dropdown = ({ bookTitle, chapters }) => {
       <div onClick={() => setExpanded(!expanded)} className={dropdownHeader}>
         <Chevron expanded={expanded} />
         <DropdownTitle bookTitle={bookTitle} expanded={expanded} />
-        {chapters.map((chapter) => (
-          <ChapterName chapter={chapter} />
-        ))}
       </div>
+      {expanded &&
+        chapters.map((chapter, index) => (
+          <ChapterName key={index} chapter={chapter} />
+        ))}
     </div>
   );
 };
@@ -67,7 +71,7 @@ const Chevron = ({ expanded }) => {
 };
 
 const DropdownTitle = ({ bookTitle, expanded }) => {
-  const selectedClasses = "text-blue-500 text-opacity-90 text-lg font-bold";
+  const selectedClasses = "text-yellow-500 text-opacity-90 text-lg font-bold";
   const unselectedClasses =
     "text-gray-500  text-opacity-90 text-lg font-semibold cursor-default";
 
@@ -85,9 +89,9 @@ const ChapterName = ({ chapter }) => {
     "text-gray-500 font-semibold tracking-wide mr-auto transition duration-300 ease-in-out hover:text-yellow-500 cursor-pointer";
 
   return (
-    <div className="nameContainer">
+    <div className={nameContainer}>
       <span className="material-icons text-gray-400">notes</span>
-      <h5 className="nameTextClasses">{chapter}</h5>
+      <h5 className={nameTextClasses}>{chapter}</h5>
     </div>
   );
 };
