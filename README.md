@@ -9,4 +9,4 @@ Add your favourite book and practice typing through it!
 Frontend done with react & tailwind. Inspired by discord app.
 
 ## Images
-![Demo](./src/assets/demo1.png)
+![Demo](./src/assets/demo.gif)

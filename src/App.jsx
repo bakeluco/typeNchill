@@ -7,9 +7,9 @@ import View from "./components/View";
 function App() {
   return (
     <div className="">
-      <Sidebar />
       {/* <Navbar /> */}
       <Collections />
+      <Sidebar />
       <View />
     </div>
   );
