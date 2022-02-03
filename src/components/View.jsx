@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import InputBar from "./InputBar";
 import { useState, useEffect, useRef } from "react";
 
 const link =
@@ -11,29 +12,35 @@ const textSplit = text.split("");
 
 const View = () => {
   const containerClasses =
-    "fixed top-0 left-80 right-0 bg-gray-700 h-full  overflow-y-scroll";
+    "fixed top-0 left-80 right-0 bg-gray-700 h-full overflow-y-scroll";
   const textClasses =
-    "mt-16 text-gray-300 py-4 px-8 m-0 transition duration-300 ease-in-out text-lg";
-  const barClasses =
-    "flex flex-row items-center justify-between fixed left-80 right-6 ml-6 bottom-2 rounded-lg shadow-lg bg-gray-600 px-2 h-12";
-  const inputClasses =
-    "font-semibold w-full bg-transparent outline-none ml-0 mr-auto text-gray-700 placeholder-gray-100 persitant-placeholder";
+    // "mt-16 text-gray-300 py-4 px-8 m-0 transition duration-300 ease-in-out text-lg";
+    "mt-16 text-gray-300 py-4 px-8 m-0 text-lg";
 
   const [currentInputKey, setCurrentInputKey] = useState("");
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [error, setError] = useState(false);
 
-  const textRef = useRef(null);
-
   useEffect(() => {
-    return () => {
-      textRef.current && textRef.current.focus();
-    };
+    localStorage.getItem("currentCharIndex") &&
+      setCurrentCharIndex(parseInt(localStorage.getItem("currentCharIndex")));
   }, []);
 
+  const textRef = useRef(null);
+
+  const setFocus = () => {
+    textRef.current && textRef.current.focus();
+  };
+
   function handleKeyDown(event) {
+    if (event.key == "Backspace" && currentCharIndex > 0) {
+      setCurrentCharIndex(currentCharIndex - 1);
+      localStorage.setItem("currentCharIndex", currentCharIndex - 1);
+      setError(false);
+    }
     if (event.key == textSplit[currentCharIndex]) {
       setCurrentCharIndex(currentCharIndex + 1);
+      localStorage.setItem("currentCharIndex", currentCharIndex + 1);
       setError(false);
     } else {
       setError(true);
@@ -41,7 +48,14 @@ const View = () => {
     setCurrentInputKey("");
   }
 
-  function getColor(index, char) {
+  const handleCharOnClick = (index) => {
+    console.log(index);
+    setCurrentCharIndex(index);
+    localStorage.setItem("currentCharIndex", index);
+    setFocus();
+  };
+
+  const getColor = (index, char) => {
     // if (!currentInputKey) return;
     if (index < currentCharIndex) return "text-gray-600";
     // if (index === currentCharIndex)
@@ -51,40 +65,33 @@ const View = () => {
     if (index === currentCharIndex && error)
       return "text-red-500 border-l-2 border-yellow-500";
     if (index === currentCharIndex) return "border-l-2 border-yellow-500";
-  }
+  };
 
   return (
-    <div className={containerClasses}>
+    <div onClick={setFocus()} className={containerClasses}>
       <Navbar />
       <div className={textClasses}>
         {textSplit.map((char, index) => {
           return (
-            <span key={index} className={getColor(index, char)}>
+            <span
+              key={index}
+              onClick={() => handleCharOnClick(index)}
+              className={getColor(index, char)}
+            >
               {char}
             </span>
           );
         })}
       </div>
-      <div className={barClasses}>
-        <span className="material-icons text-yellow-500 mx-2">add</span>
-        <input
-          type="text"
-          placeholder="Start typing here..."
-          className={inputClasses}
-          onKeyDown={handleKeyDown}
-          value={currentInputKey}
-          autoFocus
-          onChange={(event) => setCurrentInputKey(event.target.value)}
-        />
-      </div>
+      <InputBar
+        handleKeyDown={handleKeyDown}
+        currentInputKey={currentInputKey}
+        setCurrentInputKey={setCurrentInputKey}
+        textRef={textRef}
+        setCurrentCharIndex={setCurrentCharIndex}
+      />
     </div>
   );
 };
-
-// const InputBar = (props) => {
-
-//   return (
-//   );
-// };
 
 export default View;
