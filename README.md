@@ -1,12 +1,12 @@
-# Type 'N Chill
+# ☕️ Type 'N Chill ☕️
 
-Practice touch typing whithout time limits or scores.
+Practice touch typing whithout time limits or scores. ⌛️
 
-Add your favourite book and practice typing through it!
+Add your favourite book and practice typing through it! 📖
 
-Continue where you left off. Restart. Jump to wherever you like. 
+Continue where you left off. Restart. Jump to wherever you like. 📝
 
-# React + Tailwind [LINK](https://bakeluco.github.io/typeNchill/)
+# React + Tailwind 🔗 [LINK](https://bakeluco.github.io/typeNchill/) 🔗
 
-## Images
+## Images 🌅
 ![Demo](./src/assets/demo.gif)
