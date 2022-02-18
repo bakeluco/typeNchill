@@ -1,8 +1,6 @@
-import { useState } from "react";
-
-const PRIDE_AND_PREJUDICE = ["Chapter 1", "Chapter 2", "Chapter 3"];
-
-const CUSTOM_TEXTS = ["Text 1", "Text 2"];
+import { useContext } from "react";
+import { TextContext } from "../context/TextContext";
+import COLLECTIONS from "../helpers/ImportTextHelper";
 
 const Collections = () => {
   const collectionsClasses =
@@ -11,8 +9,7 @@ const Collections = () => {
 
   return (
     <section className={collectionsClasses}>
-      <h5 className={titleClasses}>📚 Collections 📚</h5>
-
+      <h5 className={titleClasses}>📚 Collection 📚</h5>
       <Books />
     </section>
   );
@@ -27,18 +24,29 @@ const Books = () => {
     "hover:text-white ml-5 font-semibold transition ease-in-out delay-100 cursor-pointer";
   const liClasses =
     "text-gray-500 hover:text-yellow-500 hover:text-base ml-10 leading-6 text-sm transition ease-in-out delay-100 cursor-pointer";
+  const selectedLiClasses =
+    "text-gray-500 hover:text-yellow-500 hover:text-base ml-10 leading-6 text-sm transition ease-in-out delay-100 cursor-pointer";
 
-  return (
-    <details open={PRIDE_AND_PREJUDICE} className={detailsClasses}>
-      <summary className={summaryClasses}>Pride & Prejudice 📖</summary>
+  const [, setText] = useContext(TextContext);
 
+  const handleChapterOnClick = (collection, chapter) => {
+    return setText(COLLECTIONS[collection][chapter].text.split(""));
+  };
+
+  return COLLECTIONS.map((collection, index) => (
+    <details key={index} className={detailsClasses} open={true}>
+      <summary className={summaryClasses}>{collection[0].title} 📖</summary>
       <ul>
-        {PRIDE_AND_PREJUDICE.map((c) => (
-          <li key={c} className={liClasses}>
-            # {c}
+        {collection.map((chapter, i) => (
+          <li
+            key={i}
+            className={liClasses}
+            onClick={() => handleChapterOnClick(index, i)}
+          >
+            {i != 0 && `# Chapter ${chapter.id}`}
           </li>
         ))}
       </ul>
     </details>
-  );
+  ));
 };

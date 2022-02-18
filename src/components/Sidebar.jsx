@@ -10,8 +10,7 @@ const tooltip = [
 
 const Sidebar = () => {
   const bgClasses = "fixed top-0 left-0 h-screen w-16 bg-gray-900 ";
-  const iconClasses =
-    "flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bg-gray-800 text-yellow-500 hover:bg-yellow-600 hover:text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear group";
+  const iconClasses = `flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bg-gray-800 text-yellow-500 hover:bg-yellow-600 hover:text-white rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear group`;
 
   return (
     <div className={bgClasses}>
@@ -29,7 +28,7 @@ const Sidebar = () => {
   );
 };
 
-const SidebarIcon = ({ icon, text }) => (
+const SidebarIcon = ({ icon }) => (
   <span className="material-icons">{icon}</span>
 );
 

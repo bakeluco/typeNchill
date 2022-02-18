@@ -1,18 +1,14 @@
 import Sidebar from "./components/Sidebar";
 import Collections from "./components/Collections";
-import Navbar from "./components/Navbar";
 import View from "./components/View";
-// import Home from "./views/Home"
+import { TextContextProvider } from "./context/TextContext";
 
-function App() {
-  return (
-    <div className="">
-      {/* <Navbar /> */}
-      <Collections />
-      <Sidebar />
-      <View />
-    </div>
-  );
-}
+const App = () => (
+  <TextContextProvider>
+    <Sidebar />
+    <Collections />;
+    <View />
+  </TextContextProvider>
+);
 
 export default App;
